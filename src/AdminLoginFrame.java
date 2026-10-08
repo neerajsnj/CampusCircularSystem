@@ -1,18 +1,18 @@
 import javax.swing.*;
 import java.awt.*;
 
-public class LoginFrame {
+public class AdminLoginFrame {
 
     public static void main(String[] args) {
 
-        JFrame frame = new JFrame("Login");
+        JFrame frame = new JFrame("Admin Login");
 
-        JLabel title = new JLabel("LOGIN");
+        JLabel title = new JLabel("ADMIN LOGIN");
         title.setFont(new Font("Arial", Font.BOLD, 24));
         title.setHorizontalAlignment(SwingConstants.CENTER);
 
-        JLabel usernameLabel = new JLabel("Username:");
-        JLabel passwordLabel = new JLabel("Password:");
+        JLabel usernameLabel = new JLabel("Admin Username:");
+        JLabel passwordLabel = new JLabel("Admin Password:");
 
         JTextField usernameField = new JTextField(15);
         JPasswordField passwordField = new JPasswordField(15);
@@ -44,9 +44,11 @@ public class LoginFrame {
             passwordField.setText("");
         });
 
-        loginButton.addActionListener(e -> {
-            JOptionPane.showMessageDialog(frame, "Login button clicked");
-        });
+        loginButton.addActionListener(e ->
+                JOptionPane.showMessageDialog(
+                        frame,
+                        "Admin Login button clicked"
+                ));
 
         frame.setSize(600, 400);
         frame.setLocationRelativeTo(null);
