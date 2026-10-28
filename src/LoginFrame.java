@@ -45,7 +45,8 @@ public class LoginFrame {
         });
 
         loginButton.addActionListener(e -> {
-            JOptionPane.showMessageDialog(frame, "Login button clicked");
+            DashboardFrame.main(new String[0]);
+            frame.dispose();
         });
 
         frame.setSize(600, 400);

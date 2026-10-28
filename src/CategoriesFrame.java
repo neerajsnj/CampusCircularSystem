@@ -15,9 +15,9 @@ public class CategoriesFrame {
         JButton examButton = new JButton("Examination");
         JButton eventsButton = new JButton("Events");
         JButton generalButton = new JButton("General");
+        JButton backButton = new JButton("Back");
 
         JPanel buttonPanel = new JPanel(new GridLayout(4, 1, 10, 10));
-
         buttonPanel.add(academicButton);
         buttonPanel.add(examButton);
         buttonPanel.add(eventsButton);
@@ -26,22 +26,38 @@ public class CategoriesFrame {
         JPanel centerPanel = new JPanel(new GridBagLayout());
         centerPanel.add(buttonPanel);
 
-        frame.setLayout(new BorderLayout(20, 20));
+        JPanel backPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
+        backPanel.add(backButton);
 
+        frame.setLayout(new BorderLayout(20, 20));
         frame.add(title, BorderLayout.NORTH);
         frame.add(centerPanel, BorderLayout.CENTER);
+        frame.add(backPanel, BorderLayout.SOUTH);
 
-        academicButton.addActionListener(e ->
-                JOptionPane.showMessageDialog(frame, "Academic category selected"));
+        academicButton.addActionListener(e -> {
+            ViewCircularsFrame.show("Academic");
+            frame.dispose();
+        });
 
-        examButton.addActionListener(e ->
-                JOptionPane.showMessageDialog(frame, "Examination category selected"));
+        examButton.addActionListener(e -> {
+            ViewCircularsFrame.show("Examination");
+            frame.dispose();
+        });
 
-        eventsButton.addActionListener(e ->
-                JOptionPane.showMessageDialog(frame, "Events category selected"));
+        eventsButton.addActionListener(e -> {
+            ViewCircularsFrame.show("Events");
+            frame.dispose();
+        });
 
-        generalButton.addActionListener(e ->
-                JOptionPane.showMessageDialog(frame, "General category selected"));
+        generalButton.addActionListener(e -> {
+            ViewCircularsFrame.show("General");
+            frame.dispose();
+        });
+
+        backButton.addActionListener(e -> {
+            DashboardFrame.main(new String[0]);
+            frame.dispose();
+        });
 
         frame.setSize(600, 450);
         frame.setLocationRelativeTo(null);

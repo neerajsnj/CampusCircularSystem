@@ -28,12 +28,11 @@ public class WelcomeFrame {
         frame.add(subtitle, BorderLayout.CENTER);
         frame.add(panel, BorderLayout.SOUTH);
 
-        exitButton.addActionListener(e -> {
-            JOptionPane.showMessageDialog(frame, "Exit button clicked");
-        });
+        exitButton.addActionListener(e -> System.exit(0));
 
         loginButton.addActionListener(e -> {
-            JOptionPane.showMessageDialog(frame, "Login button clicked");
+            LoginOptionsFrame.main(new String[0]);
+            frame.dispose();
         });
 
         frame.setSize(600, 400);
