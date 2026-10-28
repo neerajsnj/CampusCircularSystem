@@ -4,84 +4,103 @@ import java.awt.*;
 public class AddCircularFrame {
 
     public static void main(String[] args) {
+        SwingUtilities.invokeLater(AddCircularFrame::showWindow);
+    }
 
+    private static void showWindow() {
         JFrame frame = new JFrame("Add Circular");
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         JLabel heading = new JLabel("ADD NEW CIRCULAR");
         heading.setFont(new Font("Arial", Font.BOLD, 24));
         heading.setHorizontalAlignment(SwingConstants.CENTER);
+        heading.setBorder(BorderFactory.createEmptyBorder(20, 10, 15, 10));
 
         JLabel titleLabel = new JLabel("Circular Title:");
-        JTextField titleField = new JTextField(20);
-
         JLabel categoryLabel = new JLabel("Category:");
-        String[] categories = {
-                "Academic",
-                "Examination",
-                "Events",
-                "General"
-        };
-        JComboBox<String> categoryBox = new JComboBox<>(categories);
-
-        JLabel dateLabel = new JLabel("Date:");
-        JTextField dateField = new JTextField(20);
-
+        JLabel dateLabel = new JLabel("Date (DD-MM-YYYY):");
         JLabel descriptionLabel = new JLabel("Description:");
-        JTextArea descriptionArea = new JTextArea(5, 20);
+
+        JTextField titleField = new JTextField(28);
+        JComboBox<String> categoryBox = new JComboBox<>(
+                new String[]{"Academic", "Examination", "Events", "General"}
+        );
+        JTextField dateField = new JTextField(28);
+
+        JTextArea descriptionArea = new JTextArea(6, 28);
         descriptionArea.setLineWrap(true);
         descriptionArea.setWrapStyleWord(true);
 
-        JPanel formPanel = new JPanel(new GridBagLayout());
-        GridBagConstraints gbc = new GridBagConstraints();
-        gbc.insets = new Insets(8, 8, 8, 8);
-        gbc.anchor = GridBagConstraints.WEST;
-        gbc.fill = GridBagConstraints.HORIZONTAL;
+        JScrollPane descriptionScroll =
+                new JScrollPane(descriptionArea);
 
+        JPanel formPanel = new JPanel(new GridBagLayout());
+        formPanel.setBorder(BorderFactory.createEmptyBorder(10, 20, 10, 20));
+
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.insets = new Insets(9, 8, 9, 8);
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        gbc.anchor = GridBagConstraints.NORTHWEST;
+
+        // Label column
         gbc.gridx = 0;
+        gbc.weightx = 0;
         gbc.gridy = 0;
         formPanel.add(titleLabel, gbc);
-        gbc.gridx = 1;
-        formPanel.add(titleField, gbc);
 
-        gbc.gridx = 0;
         gbc.gridy = 1;
         formPanel.add(categoryLabel, gbc);
-        gbc.gridx = 1;
-        formPanel.add(categoryBox, gbc);
 
-        gbc.gridx = 0;
         gbc.gridy = 2;
         formPanel.add(dateLabel, gbc);
-        gbc.gridx = 1;
-        formPanel.add(dateField, gbc);
 
-        gbc.gridx = 0;
         gbc.gridy = 3;
         formPanel.add(descriptionLabel, gbc);
+
+        // Input column
         gbc.gridx = 1;
+        gbc.weightx = 1;
+        gbc.gridy = 0;
+        formPanel.add(titleField, gbc);
+
+        gbc.gridy = 1;
+        formPanel.add(categoryBox, gbc);
+
+        gbc.gridy = 2;
+        formPanel.add(dateField, gbc);
+
+        gbc.gridy = 3;
         gbc.fill = GridBagConstraints.BOTH;
-        formPanel.add(new JScrollPane(descriptionArea), gbc);
+        gbc.weighty = 1;
+        formPanel.add(descriptionScroll, gbc);
 
         JButton addButton = new JButton("Add Circular");
         JButton clearButton = new JButton("Clear");
         JButton backButton = new JButton("Back");
 
-        JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
+        JPanel buttonPanel = new JPanel(
+                new FlowLayout(FlowLayout.CENTER, 12, 12)
+        );
         buttonPanel.add(addButton);
         buttonPanel.add(clearButton);
         buttonPanel.add(backButton);
 
-        frame.setLayout(new BorderLayout(15, 15));
+        JPanel centerPanel = new JPanel(new GridBagLayout());
+        centerPanel.add(formPanel);
+
+        frame.setLayout(new BorderLayout(10, 10));
         frame.add(heading, BorderLayout.NORTH);
-        frame.add(formPanel, BorderLayout.CENTER);
+        frame.add(centerPanel, BorderLayout.CENTER);
         frame.add(buttonPanel, BorderLayout.SOUTH);
 
         addButton.addActionListener(e -> {
             String circularTitle = titleField.getText().trim();
             String date = dateField.getText().trim();
             String description = descriptionArea.getText().trim();
+            String category = (String) categoryBox.getSelectedItem();
 
-            if (circularTitle.isEmpty() || date.isEmpty() || description.isEmpty()) {
+            if (circularTitle.isEmpty() || date.isEmpty()
+                    || description.isEmpty()) {
                 JOptionPane.showMessageDialog(
                         frame,
                         "Please fill in the title, date, and description."
@@ -91,15 +110,18 @@ public class AddCircularFrame {
 
             JOptionPane.showMessageDialog(
                     frame,
-                    "Circular added successfully."
+                    "Circular details entered.\n\n"
+                            + "Title: " + circularTitle + "\n"
+                            + "Category: " + category + "\n"
+                            + "Date: " + date
             );
         });
 
         clearButton.addActionListener(e -> {
             titleField.setText("");
+            categoryBox.setSelectedIndex(0);
             dateField.setText("");
             descriptionArea.setText("");
-            categoryBox.setSelectedIndex(0);
         });
 
         backButton.addActionListener(e -> {
@@ -107,9 +129,9 @@ public class AddCircularFrame {
             frame.dispose();
         });
 
-        frame.setSize(600, 450);
+        frame.setSize(760, 560);
+        frame.setMinimumSize(new Dimension(700, 520));
         frame.setLocationRelativeTo(null);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setVisible(true);
     }
 }
