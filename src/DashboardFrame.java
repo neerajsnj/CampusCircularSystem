@@ -37,26 +37,42 @@ public class DashboardFrame {
         JButton categoryButton = new JButton("Categories");
         JButton notificationButton = new JButton("Notifications");
         JButton searchButton = new JButton("Search Circular");
-        JButton adminButton = new JButton("Admin");
         JButton logoutButton = new JButton("Logout");
 
         styleButton(circularButton, PRIMARY_COLOR, Color.WHITE);
         styleButton(categoryButton, PRIMARY_COLOR, Color.WHITE);
         styleButton(notificationButton, PRIMARY_COLOR, Color.WHITE);
         styleButton(searchButton, PRIMARY_COLOR, Color.WHITE);
-        styleButton(adminButton, PRIMARY_COLOR, Color.WHITE);
         styleButton(logoutButton, SECONDARY_COLOR, TITLE_COLOR);
 
-        JPanel buttonPanel = new JPanel(new GridLayout(3, 2, 14, 14));
+        JPanel buttonPanel = new JPanel(new GridBagLayout());
         buttonPanel.setOpaque(false);
-        buttonPanel.add(circularButton);
-        buttonPanel.add(categoryButton);
-        buttonPanel.add(notificationButton);
-        buttonPanel.add(searchButton);
-        buttonPanel.add(adminButton);
-        buttonPanel.add(logoutButton);
 
-        JPanel card = new JPanel(new BorderLayout(0, 28));
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.insets = new Insets(7, 7, 7, 7);
+        gbc.fill = GridBagConstraints.NONE;
+
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        buttonPanel.add(circularButton, gbc);
+
+        gbc.gridx = 1;
+        buttonPanel.add(categoryButton, gbc);
+
+        gbc.gridx = 0;
+        gbc.gridy = 1;
+        buttonPanel.add(notificationButton, gbc);
+
+        gbc.gridx = 1;
+        buttonPanel.add(searchButton, gbc);
+
+        gbc.gridx = 0;
+        gbc.gridy = 2;
+        gbc.gridwidth = 2;
+        gbc.anchor = GridBagConstraints.CENTER;
+        buttonPanel.add(logoutButton, gbc);
+
+        JPanel card = new JPanel(new BorderLayout(0, 24));
         card.setBackground(CARD_COLOR);
         card.setBorder(BorderFactory.createCompoundBorder(
                 BorderFactory.createLineBorder(new Color(226, 232, 240), 1),
@@ -90,11 +106,6 @@ public class DashboardFrame {
 
         searchButton.addActionListener(e -> {
             SearchCircularFrame.main(new String[0]);
-            frame.dispose();
-        });
-
-        adminButton.addActionListener(e -> {
-            AdminLoginFrame.main(new String[0]);
             frame.dispose();
         });
 
